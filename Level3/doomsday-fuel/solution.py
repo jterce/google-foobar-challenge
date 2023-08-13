@@ -2,6 +2,7 @@ import fractions
 import functools
 import numpy as np
 
+
 def print_m(m):
     for x in m:
         for y in x:
@@ -33,11 +34,11 @@ def probability0_matrix(m):
     return p_m
 
 
-def coefs(p0_m):
+def coefs(p0_m, init_s=0):
     an = np.array([[x[i] for x in p0_m] for i in range(len(p0_m))], dtype='float')
     np.fill_diagonal(an, -1.)
     a0 = np.array([0]*len(p0_m), dtype='float')
-    a0[0] = -1.
+    a0[init_s] = -1.
     return an, a0
 
 
@@ -61,27 +62,6 @@ def solution(m):
 if __name__ == "__main__":
     sol1 = solution(
         [
-            [0, 2, 1, 0, 0],
-            [0, 1, 0, 3, 4],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0]
-        ]
-    )
-    print(sol1, sol1 == [7, 6, 8, 21])
-    sol1 = solution(
-        [
-            [0, 2, 1, 0, 0],
-            [0, 0, 0, 3, 4],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0]
-        ]
-    )
-    print(sol1, sol1 == [7, 6, 8, 21])
-
-    sol2 = solution(
-        [
             [0, 1, 0, 0, 0, 1],
             [4, 0, 0, 3, 2, 0],
             [0, 0, 0, 0, 0, 0],
@@ -90,4 +70,26 @@ if __name__ == "__main__":
             [0, 0, 0, 0, 0, 0]
         ]
     )
-    print(sol2, sol2 == [0, 3, 2, 9, 14])
+    print(sol1, sol1 == [0, 3, 2, 9, 14])
+
+    sol2 = solution(
+        [
+            [0, 2, 1, 0, 0],
+            [0, 0, 0, 3, 4],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]
+    )
+    print(sol2, sol2 == [7, 6, 8, 21])
+
+    sol3 = solution(
+        [
+            [0, 2, 1, 0, 0],
+            [0, 1, 0, 3, 4],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]
+    )
+    print(sol3, sol3 == [7, 6, 8, 21])
