@@ -1,0 +1,40 @@
+Target: get 1
+Operations: +1, -1, /2
+- /2 is preferred because
+    it lowers faster and its result will always be at one operation distance at max from the next /2 possible
+  It is equivalent to shifting bits right 1 position
+    4 -> 0b100        44 -> 0b101100
+    2 ->  0b10        22 ->  0b10110
+    1 ->   0b1        11 ->   0b1011
+
+- When to +1 or -1? (assuming last bit = 1)
+    +1 turns all consecutive ones to zero and the next 0 to 1 (which will have to be treated in next iterations).
+        So, for every group on ones, operations += 1 (the sum) + ones (divisions for resulting zeros)
+    -1 turns last bit to 0.
+        So, operations = 1 (addition) + 1 (division)
+
+    For groups of two ones
+        +1 requires the same number of operations than -1 if followed by 2 zeros
+        +1 requires fewer operations than -1 if followed by only 1 zero, because the bit turned to 1 connect with the next group of ones
+
+    For groups of more than 2 ones
+        +1 requires fewer operations than -1
+
+Example with 1083:
+
+          1083  | 0b10000111011
+        -----------------------
+        +1 (1x) | 0b10000111100
+        /2 (2x) |   0b100001111
+        +1 (1x) |   0b100010000
+        /2 (4x) |       0b10001
+        -1 (1x) |       0b10000
+        /2 (4x) |           0b1
+        --------
+            13
+
+
+Other notes:
+- Input is said to be positive integer, so no need to consider '0'
+- Python 2 uses two types for integer: plain integers (long type in C) and long integers (unlimited size), so there is no problem handling a 309 digits number.
+  There is only one, unlimited size, type of integer in Python 3
